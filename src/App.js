@@ -1,22 +1,19 @@
-// import { initializeApp } from "firebase/app";
-// import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-// import { getAuth, connectAuthEmulator, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { signInWithEmailAndPassword , createUserWithEmailAndPassword} from 'firebase/auth';
+import {signOut, signInWithEmailAndPassword,onAuthStateChanged ,  createUserWithEmailAndPassword} from 'firebase/auth';
 import  auth  from './Firebase';
 import './App.css';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 function App() {
-  const [inputval, setinputval] = useState("")
-  const [inputval2, setinputval2] = useState("")
+  const [xcv, setxcv] = useState({})
+  const [inputval, setinputval] = useState({
+    email:"",
+    password:""
+  })
   const input = (e) => {
-    setinputval(e.target.value)
-    console.log(inputval);
-  }
-  const input2 = (e) => {
-    setinputval2(e.target.value)
-    console.log(inputval2);
+    var inputs = {[e.target.name]:e.target.value}
+    setinputval({...inputval,...inputs})
   }
 
   // const post = async () => {
@@ -32,24 +29,44 @@ function App() {
   // }
   // const provider = new GoogleAuthProvider();
   // connectAuthEmulator(auth,'http://localhost:3000/')
-const post1 = async () => {
-  const signin = await signInWithEmailAndPassword(auth , inputval , inputval2)
-  console.log(signin.user);
+  const post1 =  async () => {
+    try{  
+    await  signInWithEmailAndPassword(auth , inputval.email , inputval.password)
+    alert('logged in')
+  }catch(error){
+    alert(error.message)
+  }
 }
 const post2 = async () => {
-  const createu = await createUserWithEmailAndPassword(auth , inputval , inputval2)
-  console.log(createu.user);
+  try{  
+    await createUserWithEmailAndPassword(auth , inputval.email ,inputval.password)
+    alert('User created')
+  }catch(error){
+    alert(error.message)
+  }
 }
+const logout = () =>{
+  signOut(auth)
+  alert('logged out')
+}
+  useEffect(()=>{
+    onAuthStateChanged(auth, (currentUser) => {
+      setxcv(currentUser)
+    });
+  },[])
   return (
     <>
       <p style={{ textAlign: 'center', color: 'blue', fontWeight: '800', fontSize: '45px' }}> &rarr; &rarr; &rarr; Firebase Learning &larr; &larr; &larr;</p>
       <p style={{ textAlign: 'center', color: 'green', fontWeight: '800', fontSize: '35px' }}> &rarr; By Ameen Ansari &larr;</p>
       <label htmlFor="name">Enter Email Here</label>
-      <input type="text" id='name' required value={inputval} onChange={input} /><br />
+      <input type="email" name='email' id='name' required value={inputval.email} onChange={input} /><br />
       <label htmlFor="password" >Enter Password Here</label>
-      <input type="password" id='password' required value={inputval2} onChange={input2} /><br />
+      <input type="password" id='password' name='password' required value={inputval.password} onChange={input} /><br />
       <button onClick={post1}>SignIn</button>
       <button onClick={post2}>CreateAcount</button>
+      <button onClick={logout}>logout</button>
+
+      <h2>{xcv?.email}</h2>
     </>
   );
 }
