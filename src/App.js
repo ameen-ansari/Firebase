@@ -1,7 +1,7 @@
 // import { initializeApp } from "firebase/app";
 // import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 // import { getAuth, connectAuthEmulator, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword , createUserWithEmailAndPassword} from 'firebase/auth';
 import  auth  from './Firebase';
 import './App.css';
 import { useState } from 'react';
@@ -32,13 +32,14 @@ function App() {
   // }
   // const provider = new GoogleAuthProvider();
   // connectAuthEmulator(auth,'http://localhost:3000/')
-
-  const post = async () => {
-    const createu = await createUserWithEmailAndPassword(auth, inputval, inputval2)
-    console.log(createu.user);
-     
-
-  }
+const post1 = async () => {
+  const signin = await signInWithEmailAndPassword(auth , inputval , inputval2)
+  console.log(signin.user);
+}
+const post2 = async () => {
+  const createu = await createUserWithEmailAndPassword(auth , inputval , inputval2)
+  console.log(createu.user);
+}
   return (
     <>
       <p style={{ textAlign: 'center', color: 'blue', fontWeight: '800', fontSize: '45px' }}> &rarr; &rarr; &rarr; Firebase Learning &larr; &larr; &larr;</p>
@@ -47,15 +48,11 @@ function App() {
       <input type="text" id='name' required value={inputval} onChange={input} /><br />
       <label htmlFor="password" >Enter Password Here</label>
       <input type="password" id='password' required value={inputval2} onChange={input2} /><br />
-      <button onClick={post}>Submit</button>
+      <button onClick={post1}>SignIn</button>
+      <button onClick={post2}>CreateAcount</button>
     </>
   );
 }
 
 
 export default App;
-// Import the functions you need from the SDKs you need
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
