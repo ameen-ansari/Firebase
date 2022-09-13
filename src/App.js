@@ -1,5 +1,5 @@
-import {signOut, signInWithEmailAndPassword,onAuthStateChanged ,  createUserWithEmailAndPassword} from 'firebase/auth';
-import  auth  from './Firebase';
+import { signOut, signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword } from 'firebase/auth';
+import auth from './Firebase';
 import './App.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -8,12 +8,12 @@ import { useEffect } from 'react';
 function App() {
   const [xcv, setxcv] = useState({})
   const [inputval, setinputval] = useState({
-    email:"",
-    password:""
+    email: "",
+    password: ""
   })
   const input = (e) => {
-    var inputs = {[e.target.name]:e.target.value}
-    setinputval({...inputval,...inputs})
+    var inputs = { [e.target.name]: e.target.value }
+    setinputval({ ...inputval, ...inputs })
   }
 
   // const post = async () => {
@@ -29,31 +29,31 @@ function App() {
   // }
   // const provider = new GoogleAuthProvider();
   // connectAuthEmulator(auth,'http://localhost:3000/')
-  const post1 =  async () => {
-    try{  
-    await  signInWithEmailAndPassword(auth , inputval.email , inputval.password)
-    alert('logged in')
-  }catch(error){
-    alert(error.message)
+  const post1 = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, inputval.email, inputval.password)
+      alert('logged in')
+    } catch (error) {
+      alert(error.message)
+    }
   }
-}
-const post2 = async () => {
-  try{  
-    await createUserWithEmailAndPassword(auth , inputval.email ,inputval.password)
-    alert('User created')
-  }catch(error){
-    alert(error.message)
+  const post2 = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, inputval.email, inputval.password)
+      alert('User created')
+    } catch (error) {
+      alert(error.message)
+    }
   }
-}
-const logout = () =>{
-  signOut(auth)
-  alert('logged out')
-}
-  useEffect(()=>{
+  const logout = () => {
+    signOut(auth)
+    alert('logged out')
+  }
+  useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setxcv(currentUser)
     });
-  },[])
+  }, [])
   return (
     <>
       <p style={{ textAlign: 'center', color: 'blue', fontWeight: '800', fontSize: '45px' }}> &rarr; &rarr; &rarr; Firebase Learning &larr; &larr; &larr;</p>
