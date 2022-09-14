@@ -9,5 +9,5 @@ const app = initializeApp({
     messagingSenderId: "845272473894",
     appId: "1:845272473894:web:8f29f7a4485c2a9c2361e7"
 });
-const auth = getAuth(app);
-export default auth
+const auth = getAuth();
+export {auth , app}
