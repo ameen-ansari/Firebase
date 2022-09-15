@@ -6,8 +6,11 @@ import img3 from '../Images/Group 50.png'
 import img4 from '../Images/iph.png'
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react'
-import { createUserWithEmailAndPassword, updateProfile }  from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../Firebase'
+import db from '../Firebase'
+import { setDoc, doc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 
 export default function Login() {
@@ -26,16 +29,28 @@ export default function Login() {
             }
         )
     }
-    const createuser = async () => {
+    async function createuser() {
         try {
             var ui = await createUserWithEmailAndPassword(auth, values.email, values.password)
             var user = ui.user
+            try {
+                const docRef = await addDoc(collection(db, "users"), {
+                    first: "ameen",
+                    last: "brand",
+                    born: 2004
+                });
+                console.log("Document written with ID: ", docRef.id);
+            } catch (e) {
+                console.log(e.message);
+            }
+
             alert('Acount Created')
             navigator('/login')
             await updateProfile(user, {
                 displayName: values.uname,
                 photoURL: values.phone
             })
+
         } catch (error) {
             alert(error.message)
         }

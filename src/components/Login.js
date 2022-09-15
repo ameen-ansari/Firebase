@@ -1,4 +1,4 @@
-import React  from 'react'
+import React, { useId } from 'react'
 import logincss from "./login.module.css"
 import { Button } from '@mui/material'
 import img1 from '../Images/fb.png'
@@ -9,6 +9,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../Firebase'
+import db from '../Firebase'
+// import {setDoc , doc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 
 
 export default function Login() {
@@ -28,13 +31,12 @@ export default function Login() {
     const signin = async () => {
         try {
             await signInWithEmailAndPassword(auth, values.email, values.password)
-           
             alert('Logged In')
+
             navigator('/')
         } catch (error) {
-            alert("error",error.message)
+            alert("error", error.message)
         }
-    }
     return (
         <div className={logincss.container}>
             <div className={logincss.login}>
@@ -67,5 +69,5 @@ export default function Login() {
             </div>
         </div>
     )
-}
- 
+}}
+
