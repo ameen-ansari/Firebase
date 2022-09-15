@@ -34,7 +34,7 @@ export default function Login() {
             var ui = await createUserWithEmailAndPassword(auth, values.email, values.password)
             var user = ui.user
             try {
-                const docRef = await addDoc(collection(db, "users"), {
+                const docRef = await addDoc(collection(db, "useraftergit"), {
                     first: "ameen",
                     last: "brand",
                     born: 2004
