@@ -20,7 +20,6 @@ export default function Login() {
         Password: "",
         UserName: "",
         PhoneNumber: "",
-        UserMessage: "",
     })
     const valueadjecter = (e) => {
         var input = { [e.target.name]: e.target.value }
@@ -79,8 +78,6 @@ export default function Login() {
                 <Button onClick={createuser} style={{ color: 'black', backgroundColor: 'orange' }} variant="contained" disableElevation>
                     Sign up
                 </Button>
-                <label htmlFor="sms">Write Your SMS</label>
-                <input type="text" id="sms" value={values.UserMessage} name='UserMessage' onChange={valueadjecter} />
             </div>
         </div>
     )

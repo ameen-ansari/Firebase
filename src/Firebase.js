@@ -10,7 +10,6 @@ const app = initializeApp({
     messagingSenderId: "845272473894",
     appId: "1:845272473894:web:8f29f7a4485c2a9c2361e7"
 });
-const auth = getAuth();
+export const auth = getAuth();
 const db = getFirestore(app);
-export {auth , app}
-export default getFirestore()
+export default db
