@@ -9,17 +9,18 @@ import { useState } from 'react'
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../Firebase'
 import db from '../Firebase'
-import { setDoc, doc } from "firebase/firestore";
+// import { setDoc, doc } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 
 
 export default function Login() {
     var navigator = useNavigate()
     const [values, setvalues] = useState({
-        email: "",
-        password: "",
-        uname: "",
-        phone: ""
+        Email: "",
+        Password: "",
+        UserName: "",
+        PhoneNumber: "",
+        UserMessage: "",
     })
     const valueadjecter = (e) => {
         var input = { [e.target.name]: e.target.value }
@@ -31,26 +32,16 @@ export default function Login() {
     }
     async function createuser() {
         try {
-            var ui = await createUserWithEmailAndPassword(auth, values.email, values.password)
-            var user = ui.user
+            var ui = await createUserWithEmailAndPassword(auth, values.Email, values.Password)
+            var user = ui.user.uid
+            console.log(user);
             try {
-                const docRef = await addDoc(collection(db, "useraftergit"), {
-                    first: "ameen",
-                    last: "brand",
-                    born: 2004
-                });
-                console.log("Document written with ID: ", docRef.id);
+                await addDoc(collection(db, "users"), values);
             } catch (e) {
-                console.log(e.message);
+                alert(e.message)
             }
-
             alert('Acount Created')
-            navigator('/login')
-            await updateProfile(user, {
-                displayName: values.uname,
-                photoURL: values.phone
-            })
-
+            navigator('/sign')
         } catch (error) {
             alert(error.message)
         }
@@ -61,7 +52,7 @@ export default function Login() {
             <div className={logincss.login}>
                 <div className={logincss.head}>
                     <p>Welcome to <span style={{ color: "var(--orange)" }}>FoodDX</span></p>
-                    <p>Have An Account ?<Link to="/login" style={{ textDecoration: 'none', color: "var(--orange)" }}><span> Sign in</span></Link></p>
+                    <p>Have An Account ?<Link to="/sign" style={{ textDecoration: 'none', color: "var(--orange)" }}><span> Sign in</span></Link></p>
                 </div>
                 <p>Sign up</p>
                 <div>
@@ -71,23 +62,25 @@ export default function Login() {
                 </div>
                 <p>Enter username or email  address</p>
                 {/* //email */}
-                <input type="email" name='email' value={values.email} onChange={valueadjecter} placeholder='Enter username or email address' />
+                <input type="email" name='Email' value={values.Email} onChange={valueadjecter} placeholder='Enter username or email address' />
                 <div className={logincss.twoinputs} >
                     <div>
                         <p>User Name</p>
-                        <input value={values.uname} onChange={valueadjecter} type="text" name='uname' placeholder='User Name' />
+                        <input value={values.UserName} onChange={valueadjecter} type="text" name='UserName' placeholder='User Name' />
                     </div>
                     <div>
                         <p>Contact #</p>
-                        <input value={values.phone} onChange={valueadjecter} type="text" name='phone' placeholder='Contact Number' />
+                        <input value={values.PhoneNumber} onChange={valueadjecter} type="text" name='PhoneNumber' placeholder='Contact Number' />
                     </div>
                 </div>
                 <p>Enter your Password</p>
                 {/* //password */}
-                <input value={values.password} name='password' onChange={valueadjecter} type="password" placeholder='Enter your Password' />
+                <input value={values.Password} name='Password' onChange={valueadjecter} type="password" placeholder='Enter your Password' />
                 <Button onClick={createuser} style={{ color: 'black', backgroundColor: 'orange' }} variant="contained" disableElevation>
                     Sign up
                 </Button>
+                <label htmlFor="sms">Write Your SMS</label>
+                <input type="text" id="sms" value={values.UserMessage} name='UserMessage' onChange={valueadjecter} />
             </div>
         </div>
     )

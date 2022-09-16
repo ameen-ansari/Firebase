@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import Login from './components/Login'
+import Sign from "./components/Login";
 import Signup from './components/Signup'
 import { Routes, Route } from "react-router-dom";
 import Homepage from './components/Homepage';
@@ -17,8 +17,8 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Homepage printmail={userEmail} />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Homepage printmail={userEmail}  />} />
+        <Route path="/sign" element={<Sign />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
     </>

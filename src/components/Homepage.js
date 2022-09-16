@@ -15,7 +15,7 @@ export default function Homepage(props) {
                     sign up
                 </Button>
             </Link>
-            <Link to="login" style={{ margin: "1rem", textDecoration: 'none' }}>
+            <Link to="sign" style={{ margin: "1rem", textDecoration: 'none' }}>
                 <Button style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none' }} variant="bordered" disableElevation>
                     Sign In
                 </Button>
