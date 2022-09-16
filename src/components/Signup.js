@@ -20,6 +20,8 @@ export default function Login() {
         Password: "",
         UserName: "",
         PhoneNumber: "",
+        UserId:"",
+        Msg: ""
     })
     const valueadjecter = (e) => {
         var input = { [e.target.name]: e.target.value }
@@ -33,6 +35,7 @@ export default function Login() {
         try {
             var ui = await createUserWithEmailAndPassword(auth, values.Email, values.Password)
             var user = ui.user.uid
+            values.UserId = user
             console.log(user);
             try {
                 await addDoc(collection(db, "users"), values);
@@ -78,6 +81,7 @@ export default function Login() {
                 <Button onClick={createuser} style={{ color: 'black', backgroundColor: 'orange' }} variant="contained" disableElevation>
                     Sign up
                 </Button>
+                        <input value={values.Msg} onChange={valueadjecter} type="text" name='Msg' placeholder='Message' />
             </div>
         </div>
     )
