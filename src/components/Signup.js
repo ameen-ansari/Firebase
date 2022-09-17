@@ -9,7 +9,6 @@ import { useState } from 'react'
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../Firebase'
 import db from '../Firebase'
-// import { setDoc, doc } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 
 
@@ -42,7 +41,7 @@ export default function Login() {
             } catch (e) {
                 alert(e.message)
             }
-            alert('Acount Created')
+            alert('Acount Created Sucessfully')
             navigator('/sign')
         } catch (error) {
             alert(error.message)
