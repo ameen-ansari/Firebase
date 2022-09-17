@@ -18,57 +18,19 @@ export default function Homepage(props) {
     const onClick = async () => {
         let UID = auth.currentUser.uid
         console.log(UID);
-
-        // const docRef = doc(db, "users" , "72wAScfMFSfj7ayiHjey");
-        // const docSnap = await getDoc(docRef);
-
-        // if (docSnap.exists()) {
-        //     console.log("Document data:", docSnap.data());
-        // } else {
-        //     // doc.data() will be undefined in this case
-        //     console.log("No such document!");
-        // }
-
         const q = query(collection(db, "users"), where("UserId", "==", UID));
-
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
             userObj = doc.data()
             setvalue({
-                email: userObj.UserName,
-                userName: userObj.Email,
-                phone: userObj.Password,
-                password: userObj.PhoneNumber,
-                message: userObj.UserId,
-                uid: userObj.Msg
+                email: userObj.Email,
+                userName: userObj.UserName,
+                phone: userObj.PhoneNumber,
+                password: userObj.Password,
+                message: userObj.Msg,
+                uid: userObj.UserId
             })
         });
-        // const docRef = doc(db, "users", id);
-        // const docSnap = await getDoc(docRef);
-        // console.log("data", docSnap.data());
-        // const querySnapshot = await getDocs(collection(db, "users"));
-        // const data = []
-        // querySnapshot.forEach((doc) => {
-        //     data.push(doc.data())
-        // })
-        // querySnapshot.forEach((doc) => {
-        //     console.log(doc);
-        // })
-        // console.log("data", data);
-        // ---
-        // Add a new document in collection "cities"
-        // let xhr = await setDoc(doc(db, "demo" , " xhhhhhhhhhhhhr"), {
-        //     name: "Los Angeles",
-        //     state: "xyz8",
-        //     country: "Pakistan"
-        // });
-        // console.log(xhr);
-        // ---
-        // const cityRef = doc(db, 'cities', 'BJ');
-        // setDoc(cityRef, { merge: true }, { capital: true });
-        // --
-
     }
     const logout = () => {
         auth.signOut()
