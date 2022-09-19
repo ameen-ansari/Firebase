@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 const app = initializeApp({
     apiKey: "AIzaSyA8-Yxyh6Bo0hgcqSgP-YO6LTshETp8Qds",
     authDomain: "fooddx-aa127.firebaseapp.com",
@@ -10,6 +11,9 @@ const app = initializeApp({
     messagingSenderId: "845272473894",
     appId: "1:845272473894:web:8f29f7a4485c2a9c2361e7"
 });
-export const auth = getAuth();
+const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app)
 export default db
+export{auth , storage}
+
