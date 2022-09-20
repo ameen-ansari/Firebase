@@ -36,26 +36,35 @@ export default function Homepage(props) {
     const logout = () => {
         auth.signOut()
     }
-    const getf =async (e) => {
+    const getf = async (e) => {
         setimgurl(e.target.files[0])
     }
     const upl = async (e) => {
-        let refrence1 = ref(storage , `Images/${imgurl.name}`)
-        let refrence2 = ref(storage , `Images/${imgurl.name}`)
-        try{
+        let refrence1 = ref(storage, `Images/${imgurl.name}`)
+        let refrence2 = ref(storage, `Images/${imgurl.name}`)
+        try {
             await uploadBytes(refrence1, imgurl)
             alert("Uploaded")
-            await getDownloadURL(refrence2).then((e)=>{
-                let q = query(collection(db,'ImageUrls') ,where("uid" ,"==" ,auth.currentUser.uid) )
-                getDocs(q).then((a)=>{
-                    a.forEach((u)=>{
-                        u.data()                        
-                        setDoc(doc(db,"ImageUrls",u),{src:"op"})
-                    })
-                })
+            let ggref = await addDoc(collection(db, "Images",), {
+                mg: 'hello world'
             })
+            const querySnapshot = await getDocs(collection(db, "Images"));
+            querySnapshot.forEach((doc) => {
+                console.log(`${doc.id} => ${doc.data()?.msg}`);
+            });
+            //get data from 1 object in firestore
+            // await getDownloadURL(refrence2).then((e)=>{
+            // let q = query(collection(db,'ImageUrls') ,where("src" ,"==" ,auth.currentUser.uid) )
 
-        }catch(e){
+            // getDocs(q).then((a)=>{
+            //     a.forEach((u)=>{
+            //         let df = u.data()      
+            //         console.log(df);
+            //     })
+            // })
+            // })
+
+        } catch (e) {
             alert(e.message)
         }
     }
