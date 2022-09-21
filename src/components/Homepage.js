@@ -8,6 +8,7 @@ import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
 
 export default function Homepage(props) {
     const [imgurl, setimgurl] = useState()
+    const [urls, seturls] = useState()
     var refrence3;
     // const [uservalue, setvalue] = useState({
     //     email: "",
@@ -54,93 +55,93 @@ export default function Homepage(props) {
                 getDocs(refrence3).then((a) => {
                     a.forEach((u) => {
                         df = u.data().src
-                        document.getElementById('contain').appendChild(document.createElement('img'))
-                    })
-                    let gimg  = document.getElementsByTagName('img')
-                    Array.from(gimg).forEach((h)=>{
-                        h.setAttribute('src',e)
-                        h.style.width = "200px"
-                        h.style.height = "200px"
+                        seturls(df)
+                        // console.log(urls);
                     })
                 })
+                let contain = document.getElementById("contain")
+                contain.innerHTML = `<img src=${urls} width="200px" height="200px"></img>`
+                console.log(urls);
             })
-        // querySnapshot.forEach((doc) => {
-        //     console.log(doc.data().src);
-        // });
-        // get data from 1 object in firestore
-        // await setDoc(doc(db, "Images", gg), { "name": 'ameen akbar' });
-        // const frankDocRef = doc(db, "Images", "frank");
-        // await setDoc(frankDocRef, {
-        //     name: "Frank",
-        //     favorites: { food: "Pizza", color: "Blue", subject: "recess" },
-        //     age: 12
-        // });
 
-        // To update age and favorite color:
-        // await updateDoc(frankDocRef, {
-        //     "age": 13,
-        //     "favorites.color": "Red"
-        // });
-        // const querySnapshot = await getDocs(collection(db, "users"));
-        // querySnapshot.forEach((doc) => {
-        //     doc.data() is never undefined for query doc snapshots
-        //     console.log(doc.data());
-        // });
-        //======
-        // const docRef = doc(db, "users/");
-        // const docSnap = await getDoc(docRef);
 
-        // if (docSnap.exists()) {
-        //     console.log("Document data:", docSnap.data().mg);
-        // } else {
-        //     // doc.data() will be undefined in this case
-        //     console.log("No such document!");
-        // }
-        // =====
-        // const querySnapshot = await getDocs(collection(db, "Images"));
-        // querySnapshot.forEach((doc) => {
-        //     console.log(`${doc.id} => ${doc.data().msg}`);
-        // });
-        //get data from 1 object in firestore
-        // await getDownloadURL(refrence2).then((e)=>{
-        // let q = query(collection(db,'ImageUrls') ,where("src" ,"==" ,auth.currentUser.uid) )
+            // querySnapshot.forEach((doc) => {
+            //     console.log(doc.data().src);
+            // });
+            // get data from 1 object in firestore
+            // await setDoc(doc(db, "Images", gg), { "name": 'ameen akbar' });
+            // const frankDocRef = doc(db, "Images", "frank");
+            // await setDoc(frankDocRef, {
+            //     name: "Frank",
+            //     favorites: { food: "Pizza", color: "Blue", subject: "recess" },
+            //     age: 12
+            // });
 
-        // getDocs(q).then((a)=>{
-        //     a.forEach((u)=>{
-        //         let df = u.data()      
-        //         console.log(df);
-        //     })
-        // })
-        // })
+            // To update age and favorite color:
+            // await updateDoc(frankDocRef, {
+            //     "age": 13,
+            //     "favorites.color": "Red"
+            // });
+            // const querySnapshot = await getDocs(collection(db, "users"));
+            // querySnapshot.forEach((doc) => {
+            //     doc.data() is never undefined for query doc snapshots
+            //     console.log(doc.data());
+            // });
+            //======
+            // const docRef = doc(db, "users/");
+            // const docSnap = await getDoc(docRef);
 
-    } catch (e) {
-        alert(e.message)
+            // if (docSnap.exists()) {
+            //     console.log("Document data:", docSnap.data().mg);
+            // } else {
+            //     // doc.data() will be undefined in this case
+            //     console.log("No such document!");
+            // }
+            // =====
+            // const querySnapshot = await getDocs(collection(db, "Images"));
+            // querySnapshot.forEach((doc) => {
+            //     console.log(`${doc.id} => ${doc.data().msg}`);
+            // });
+            //get data from 1 object in firestore
+            // await getDownloadURL(refrence2).then((e)=>{
+            // let q = query(collection(db,'ImageUrls') ,where("src" ,"==" ,auth.currentUser.uid) )
+
+            // getDocs(q).then((a)=>{
+            //     a.forEach((u)=>{
+            //         let df = u.data()      
+            //         console.log(df);
+            //     })
+            // })
+            // })
+
+        } catch (e) {
+            alert(e.message)
+        }
     }
-}
 
-return (
-    <div>
-        <h2>{props?.printmail}</h2>
-        <Link to="signup" style={{ margin: "1rem", textDecoration: 'none' }}>
-            <Button style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none' }} variant="bordered" disableElevation>
-                sign up
+    return (
+        <div>
+            <h2>{props?.printmail}</h2>
+            <Link to="signup" style={{ margin: "1rem", textDecoration: 'none' }}>
+                <Button style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none' }} variant="bordered" disableElevation>
+                    sign up
+                </Button>
+            </Link>
+            <Link to="sign" style={{ margin: "1rem", textDecoration: 'none' }}>
+                <Button style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none' }} variant="bordered" disableElevation>
+                    Sign In
+                </Button>
+            </Link>
+            <Button onClick={logout} style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none', margin: "1rem", }} variant="bordered" disableElevation>
+                Logout
             </Button>
-        </Link>
-        <Link to="sign" style={{ margin: "1rem", textDecoration: 'none' }}>
-            <Button style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none' }} variant="bordered" disableElevation>
-                Sign In
-            </Button>
-        </Link>
-        <Button onClick={logout} style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none', margin: "1rem", }} variant="bordered" disableElevation>
-            Logout
-        </Button>
-        {/* <Button onClick={onClick} style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none', margin: "1rem", }} variant="bordered" disableElevation>
+            {/* <Button onClick={onClick} style={{ fontWeight: '800', color: 'black', backgroundColor: 'orange', textDecoration: 'none', margin: "1rem", }} variant="bordered" disableElevation>
                 GetData
             </Button><br /> */}
-        <input type="file" onChange={getf} />
-        <button onClick={upl}>Upload</button>
-        <br />
-        <div id="contain"></div>
-    </div>
-)
+            <input type="file" onChange={getf} />
+            <button onClick={upl}>Upload</button>
+            <br />
+            <div id="contain"></div>
+        </div>
+    )
 }
