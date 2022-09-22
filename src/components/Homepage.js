@@ -9,7 +9,7 @@ import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
 export default function Homepage(props) {
     const [imgurl, setimgurl] = useState()
     const [urls, seturls] = useState()
-    var refrence3;
+    // var refrence3;
     // const [uservalue, setvalue] = useState({
     //     email: "",
     //     userName: "",
@@ -41,84 +41,91 @@ export default function Homepage(props) {
     const getf = async (e) => {
         setimgurl(e.target.files[0])
     }
-    let df;
+    // let df;
     const upl = async (e) => {
-        let refrence1 = ref(storage, `Images/${imgurl.name}`)
-        let refrence2 = ref(storage, `Images/${imgurl.name}`)
         try {
-            await uploadBytes(refrence1, imgurl)
-            alert("Uploaded")
-            const querySnapshot = await getDocs(collection(db, "Images"));
-            await getDownloadURL(refrence2).then((e) => {
-                seturls(e)
-                let contain = document.getElementById("contain")
-                contain.innerHTML += `<img src=${e} width="200px" height="200px"></img>`
-                // addDoc(collection(db, "New ImgC"), { src: e })
-                // refrence3 = ref(collection(db, `New ImgC`))
-                // getDocs(refrence3).then((a) => {
-                //     a.forEach((u) => {
-                //         df = u.data().src
-                //         seturls(df)
-                //         // console.log(urls);
-                //     })
-                // })
-            })
+            if (auth.currentUser.uid === null) {
+            }
+            else {
+                try {
+                    let refrence1 = ref(storage, `Images/${imgurl.name}`)
+                    let refrence2 = ref(storage, `Images/${imgurl.name}`)
+                    await uploadBytes(refrence1, imgurl)
+                    alert("Uploaded")
+                    const querySnapshot = await getDocs(collection(db, "Images"));
+                    await getDownloadURL(refrence2).then((e) => {
+                        seturls(e)
+                        let contain = document.getElementById("contain")
+                        contain.innerHTML += `<img src=${e} width="200px" height="200px"></img>`
+                        // addDoc(collection(db, "New ImgC"), { src: e })
+                        // refrence3 = ref(collection(db, `New ImgC`))
+                        // getDocs(refrence3).then((a) => {
+                        //     a.forEach((u) => {
+                        //         df = u.data().src
+                        //         seturls(df)
+                        //         // console.log(urls);
+                        //     })
+                        // })
+                    })
 
 
-            // querySnapshot.forEach((doc) => {
-            //     console.log(doc.data().src);
-            // });
-            // get data from 1 object in firestore
-            // await setDoc(doc(db, "Images", gg), { "name": 'ameen akbar' });
-            // const frankDocRef = doc(db, "Images", "frank");
-            // await setDoc(frankDocRef, {
-            //     name: "Frank",
-            //     favorites: { food: "Pizza", color: "Blue", subject: "recess" },
-            //     age: 12
-            // });
+                    // querySnapshot.forEach((doc) => {
+                    //     console.log(doc.data().src);
+                    // });
+                    // get data from 1 object in firestore
+                    // await setDoc(doc(db, "Images", gg), { "name": 'ameen akbar' });
+                    // const frankDocRef = doc(db, "Images", "frank");
+                    // await setDoc(frankDocRef, {
+                    //     name: "Frank",
+                    //     favorites: { food: "Pizza", color: "Blue", subject: "recess" },
+                    //     age: 12
+                    // });
 
-            // To update age and favorite color:
-            // await updateDoc(frankDocRef, {
-            //     "age": 13,
-            //     "favorites.color": "Red"
-            // });
-            // const querySnapshot = await getDocs(collection(db, "users"));
-            // querySnapshot.forEach((doc) => {
-            //     doc.data() is never undefined for query doc snapshots
-            //     console.log(doc.data());
-            // });
-            //======
-            // const docRef = doc(db, "users/");
-            // const docSnap = await getDoc(docRef);
+                    // To update age and favorite color:
+                    // await updateDoc(frankDocRef, {
+                    //     "age": 13,
+                    //     "favorites.color": "Red"
+                    // });
+                    // const querySnapshot = await getDocs(collection(db, "users"));
+                    // querySnapshot.forEach((doc) => {
+                    //     doc.data() is never undefined for query doc snapshots
+                    //     console.log(doc.data());
+                    // });
+                    //======
+                    // const docRef = doc(db, "users/");
+                    // const docSnap = await getDoc(docRef);
 
-            // if (docSnap.exists()) {
-            //     console.log("Document data:", docSnap.data().mg);
-            // } else {
-            //     // doc.data() will be undefined in this case
-            //     console.log("No such document!");
-            // }
-            // =====
-            // const querySnapshot = await getDocs(collection(db, "Images"));
-            // querySnapshot.forEach((doc) => {
-            //     console.log(`${doc.id} => ${doc.data().msg}`);
-            // });
-            //get data from 1 object in firestore
-            // await getDownloadURL(refrence2).then((e)=>{
-            // let q = query(collection(db,'ImageUrls') ,where("src" ,"==" ,auth.currentUser.uid) )
+                    // if (docSnap.exists()) {
+                    //     console.log("Document data:", docSnap.data().mg);
+                    // } else {
+                    //     // doc.data() will be undefined in this case
+                    //     console.log("No such document!");
+                    // }
+                    // =====
+                    // const querySnapshot = await getDocs(collection(db, "Images"));
+                    // querySnapshot.forEach((doc) => {
+                    //     console.log(`${doc.id} => ${doc.data().msg}`);
+                    // });
+                    //get data from 1 object in firestore
+                    // await getDownloadURL(refrence2).then((e)=>{
+                    // let q = query(collection(db,'ImageUrls') ,where("src" ,"==" ,auth.currentUser.uid) )
 
-            // getDocs(q).then((a)=>{
-            //     a.forEach((u)=>{
-            //         let df = u.data()      
-            //         console.log(df);
-            //     })
-            // })
-            // })
+                    // getDocs(q).then((a)=>{
+                    //     a.forEach((u)=>{
+                    //         let df = u.data()      
+                    //         console.log(df);
+                    //     })
+                    // })
+                    // })
 
+                } catch (e) {
+                    alert(e.message)
+                }
+            }
         } catch (e) {
-            alert(e.message)
+            alert('pleace Signup First')
         }
     }
-
     return (
         <div>
             <h2>{props?.printmail}</h2>
@@ -141,7 +148,7 @@ export default function Homepage(props) {
             <input type="file" onChange={getf} />
             <button onClick={upl}>Upload</button>
             <br />
-            <div id="contain" style={{display:"flex",justifyContent:"center",alignItems:"center",flexWrap:"wrap",gap:'1rem'}}></div>
+            <div id="contain" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: '1rem' }}></div>
         </div>
     )
 }
