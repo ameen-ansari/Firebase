@@ -50,18 +50,18 @@ export default function Homepage(props) {
             alert("Uploaded")
             const querySnapshot = await getDocs(collection(db, "Images"));
             await getDownloadURL(refrence2).then((e) => {
-                addDoc(collection(db, "New ImgC"), { src: e })
-                refrence3 = ref(collection(db, `New ImgC`))
-                getDocs(refrence3).then((a) => {
-                    a.forEach((u) => {
-                        df = u.data().src
-                        seturls(df)
-                        // console.log(urls);
-                    })
-                })
+                seturls(e)
                 let contain = document.getElementById("contain")
-                contain.innerHTML = `<img src=${urls} width="200px" height="200px"></img>`
-                console.log(urls);
+                contain.innerHTML += `<img src=${e} width="200px" height="200px"></img>`
+                // addDoc(collection(db, "New ImgC"), { src: e })
+                // refrence3 = ref(collection(db, `New ImgC`))
+                // getDocs(refrence3).then((a) => {
+                //     a.forEach((u) => {
+                //         df = u.data().src
+                //         seturls(df)
+                //         // console.log(urls);
+                //     })
+                // })
             })
 
 
@@ -141,7 +141,7 @@ export default function Homepage(props) {
             <input type="file" onChange={getf} />
             <button onClick={upl}>Upload</button>
             <br />
-            <div id="contain"></div>
+            <div id="contain" style={{display:"flex",justifyContent:"center",alignItems:"center",flexWrap:"wrap",gap:'1rem'}}></div>
         </div>
     )
 }
